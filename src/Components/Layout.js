@@ -6,10 +6,11 @@ import {
   Typography,
   Button,
   Container,
+  Link,
 } from "@material-ui/core";
 import Head from "next/head";
 import useStyles from "../../utils/JssStyles";
-
+import NextLink from "next/link";
 const Layout = ({ children }) => {
   const classes = useStyles();
   return (
@@ -19,7 +20,24 @@ const Layout = ({ children }) => {
       </Head>
       <AppBar position="static" className={classes.navbar}>
         <Toolbar>
-          <Typography>My Web</Typography>
+          <NextLink href="/">
+            <Link>
+              <Typography className={classes.Brand}>My Web</Typography>
+            </Link>
+          </NextLink>
+          <div className={classes.FlexGrow}></div>
+          <div className={classes.Links}>
+            <NextLink href="/cart">
+              <Link>
+                <Typography>Cart</Typography>
+              </Link>
+            </NextLink>
+            <NextLink href="/login">
+              <Link>
+                <Typography>Login</Typography>
+              </Link>
+            </NextLink>
+          </div>
         </Toolbar>
       </AppBar>
       <Container className={classes.main}>{children}</Container>
