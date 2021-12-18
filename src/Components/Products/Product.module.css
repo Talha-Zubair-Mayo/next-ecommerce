@@ -47,12 +47,17 @@
 }
 
 .product_card .shoe_details .shoe_name {
-  font-size: 24px;
+  text-decoration: none;
+  font-size: 16px;
   font-weight: 500;
   color: #161616;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  
+}
+.product_card .shoe_details .shoe_name:hover {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ff8b00;
 }
 .product_card .shoe_details p {
   font-size: 12px;
