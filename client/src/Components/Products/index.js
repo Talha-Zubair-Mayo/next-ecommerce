@@ -2,7 +2,14 @@ import React from "react";
 import styles from "./Product.module.css";
 import Rating from "@mui/material/Rating";
 import NextLink from "next/link";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Redux/Actions/CartAction";
 const Product = ({ productDetails }) => {
+  const dispatch = useDispatch();
+
+  const AddToCartHandler = async () => {
+    await dispatch(addToCart(productDetails, 1));
+  };
   return (
     <div className={styles.product_card}>
       <div className={styles.logo_cart}>
@@ -48,7 +55,7 @@ const Product = ({ productDetails }) => {
       </div>
       <div className={styles.button}>
         <div className={styles.button_layer}></div>
-        <button>Add To Cart</button>
+        <button onClick={AddToCartHandler}>Add To Cart</button>
       </div>
     </div>
   );

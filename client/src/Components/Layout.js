@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   AppBar,
   Toolbar,
@@ -7,12 +8,14 @@ import {
   Button,
   Container,
   Link,
+  Badge,
 } from "@material-ui/core";
 import Head from "next/head";
 import useStyles from "../../utils/JssStyles";
 import NextLink from "next/link";
 const Layout = ({ children, title, description }) => {
   const classes = useStyles();
+  const CartItems = useSelector((state) => state.CartItems.cartItems.length);
   return (
     <div>
       <Head>
@@ -30,9 +33,16 @@ const Layout = ({ children, title, description }) => {
           <div className={classes.FlexGrow}></div>
           <div className={classes.Links}>
             <NextLink href="/cart">
-              <Link>
-                <Typography>Cart</Typography>
-              </Link>
+              <Badge
+                color="secondary"
+                overlap="circle"
+                badgeContent={CartItems}>
+                <Link>
+                  <IconButton>
+                    <i className="bx bx-cart"></i>
+                  </IconButton>
+                </Link>
+              </Badge>
             </NextLink>
             <NextLink href="/login">
               <Link>

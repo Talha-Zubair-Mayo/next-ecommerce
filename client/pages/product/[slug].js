@@ -9,8 +9,8 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../src/Redux/Actions/CartAction";
 const ProductScreen = ({ productDetails }) => {
   const dispatch = useDispatch();
-  const AddToCartHandler = async (id) => {
-    await dispatch(addToCart(productDetails));
+  const AddToCartHandler = async () => {
+    await dispatch(addToCart(productDetails, 1));
   };
   return (
     <Layout
@@ -74,12 +74,11 @@ const ProductScreen = ({ productDetails }) => {
                   <div className="col-lg-12 mt-3">
                     <div className="row">
                       <div className="col-lg-6 pb-2">
-                        <a
-                          onClick={() => AddToCartHandler(productDetails._id)}
-                          href="#"
+                        <button
+                          onClick={AddToCartHandler}
                           className="btn btn-danger w-100">
                           Add To Cart
-                        </a>
+                        </button>
                       </div>
                       <div className="col-lg-6">
                         <a href="#" className="btn btn-success w-100">
