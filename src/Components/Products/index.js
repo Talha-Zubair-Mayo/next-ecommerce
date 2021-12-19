@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Product.module.css";
 import Rating from "@mui/material/Rating";
+import NextLink from "next/link";
 const Product = ({ productDetails }) => {
   return (
     <div className={styles.product_card}>
@@ -8,18 +9,22 @@ const Product = ({ productDetails }) => {
         <i className="bx bxl-meta"></i> <i className="bx bx-shopping-bag"></i>
       </div>
       <div className={styles.main_images}>
-        <img
-          id="blue"
-          className="blue active"
-          src={productDetails.image}
-          alt="blue"
-        />
+        <NextLink href={`/product/${productDetails.title}`}>
+          <img
+            id="blue"
+            className="blue active"
+            src={productDetails.image}
+            alt="blue"
+          />
+        </NextLink>
       </div>
+
       <div className={styles.shoe_details}>
-        <span className="shoe_name">{productDetails.title}</span>
+        <NextLink href={`/product/${productDetails.uuid}`}>
+          <a className="shoe_name">{productDetails.title}</a>
+        </NextLink>
         <p>{productDetails.description}</p>
         <div className="stars">
-          {" "}
           <Rating
             name="size-large"
             defaultValue={productDetails.rating.rate}

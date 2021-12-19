@@ -11,12 +11,12 @@ import {
 import Head from "next/head";
 import useStyles from "../../utils/JssStyles";
 import NextLink from "next/link";
-const Layout = ({ children }) => {
+const Layout = ({ children, title }) => {
   const classes = useStyles();
   return (
     <div>
       <Head>
-        <title>Ecommerce Site</title>
+        <title>{title ? title : "Ecommerce Site"}</title>
       </Head>
       <AppBar position="static" className={classes.navbar}>
         <Toolbar>
