@@ -21,7 +21,7 @@ const Product = ({ productDetails }) => {
 
       <div className={styles.shoe_details}>
         <NextLink href={`/product/${productDetails.uuid}`}>
-          <a className="shoe_name">{productDetails.title}</a>
+          <a className={styles.shoe_name}>{productDetails.title}</a>
         </NextLink>
         <p>{productDetails.description}</p>
         <div className="stars">
