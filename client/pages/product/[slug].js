@@ -5,8 +5,13 @@ import Layout from "../../src/components/Layout";
 import styles from "./ProductDetails.module.css";
 import Rating from "@mui/material/Rating";
 import NextLink from "next/link";
-
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../src/Redux/Actions/CartAction";
 const ProductScreen = ({ productDetails }) => {
+  const dispatch = useDispatch();
+  const AddToCartHandler = async (id) => {
+    await dispatch(addToCart(productDetails));
+  };
   return (
     <Layout
       title={productDetails.title}
@@ -69,7 +74,10 @@ const ProductScreen = ({ productDetails }) => {
                   <div className="col-lg-12 mt-3">
                     <div className="row">
                       <div className="col-lg-6 pb-2">
-                        <a href="#" className="btn btn-danger w-100">
+                        <a
+                          onClick={() => AddToCartHandler(productDetails._id)}
+                          href="#"
+                          className="btn btn-danger w-100">
                           Add To Cart
                         </a>
                       </div>
