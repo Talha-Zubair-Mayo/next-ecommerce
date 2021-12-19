@@ -38,7 +38,7 @@ const Product = ({ productDetails }) => {
         </div>
         <div className={styles.price}>
           <span className={styles.price_num}>${productDetails.price}</span>
-          <span className={styles.price_letter}>Nine dollar only</span>
+          {/* <span className={styles.price_letter}>Nine dollar only</span> */}
         </div>
       </div>
       <div className={styles.button}>
