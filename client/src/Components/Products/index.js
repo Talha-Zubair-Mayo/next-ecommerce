@@ -20,14 +20,14 @@ const Product = ({ productDetails }) => {
       </div>
 
       <div className={styles.shoe_details}>
-        <NextLink href={`/product/${productDetails.uuid}`}>
+        <NextLink href={`/product/${productDetails._id}`}>
           <a className={styles.shoe_name}>{productDetails.title}</a>
         </NextLink>
         <p>{productDetails.description}</p>
         <div className="stars">
           <Rating
             name="size-large"
-            defaultValue={productDetails.rating.rate}
+            defaultValue={productDetails.rating}
             precision={0.5}
           />
         </div>

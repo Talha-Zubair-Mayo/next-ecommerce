@@ -52,10 +52,10 @@ const ProductScreen = ({ productDetails }) => {
                       <strong>Rating : </strong>
                       <Rating
                         name="size-large"
-                        defaultValue={productDetails.rating.rate}
+                        defaultValue={productDetails.rating}
                         precision={0.5}
                       />{" "}
-                      of ({productDetails.rating.count} Reviews)
+                      of ({productDetails.NumReviews} Reviews)
                     </p>
                   </div>
                   {/* <div className="col-lg-12">
@@ -90,11 +90,17 @@ const ProductScreen = ({ productDetails }) => {
   );
 };
 
-export default ProductScreen;
+export async function getServerSideProps({ query }) {
+  const res = await fetch(`http://localhost:8080/api/products/${query.slug}`);
+  const json = await res.json();
+  return {
+    props: { productDetails: json }, // will be passed to the page component as props
+  };
+}
+// ProductScreen.getInitialProps = async ({ query }) => {
+//   const res = await fetch(`http://localhost:8080/api/products/${query.slug}`);
+//   const json = await res.json();
+//   return { productDetails: json };
+// };
 
-ProductScreen.getInitialProps = async ({ query }) => {
-  const productDetails = AllProducts.find(
-    (product) => product.uuid === query.slug
-  );
-  return { productDetails: productDetails };
-};
+export default ProductScreen;
