@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   AppBar,
@@ -15,7 +15,11 @@ import useStyles from "../../utils/JssStyles";
 import NextLink from "next/link";
 const Layout = ({ children, title, description }) => {
   const classes = useStyles();
-  const CartItems = useSelector((state) => state?.CartItems?.cartItems?.length);
+  const [Total, setTotal] = useState("");
+  const CartItems = useSelector((state) => state?.CartItems.cartItems);
+  useEffect(() => {
+    setTotal(CartItems.length);
+  }, [CartItems]);
   return (
     <div>
       <Head>
@@ -33,10 +37,7 @@ const Layout = ({ children, title, description }) => {
           <div className={classes.FlexGrow}></div>
           <div className={classes.Links}>
             <NextLink href="/cart">
-              <Badge
-                color="secondary"
-                overlap="circular"
-                badgeContent={CartItems}>
+              <Badge color="secondary" overlap="circular" badgeContent={Total}>
                 <Link>
                   <IconButton>
                     <i className="bx bx-cart"></i>
@@ -45,9 +46,13 @@ const Layout = ({ children, title, description }) => {
               </Badge>
             </NextLink>
             <NextLink href="/login">
-              <Link>
-                <Typography>Login</Typography>
-              </Link>
+              <a
+                style={{
+                  textAlign: "center",
+                  paddingTop: "10px",
+                }}>
+                Login
+              </a>
             </NextLink>
           </div>
         </Toolbar>
