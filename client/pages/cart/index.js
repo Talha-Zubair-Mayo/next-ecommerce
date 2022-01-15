@@ -4,7 +4,7 @@ import Layout from "../../src/Components/Layout";
 import { useSelector } from "react-redux";
 
 const Cart = () => {
-  const CartItems = useSelector((state) => state.CartItems.cartItems);
+  const CartItems = useSelector((state) => state?.CartItems?.cartItems);
 
   return (
     <Layout title="CartItems" description="CartItems">
@@ -19,13 +19,13 @@ const Cart = () => {
                   shopping Cart
                 </h5>
               </div>
-              {CartItems.length > 0 && (
+              {CartItems?.length > 0 && (
                 <div className="font-weight-normal">
-                  {CartItems.length} items
+                  {CartItems?.length} items
                 </div>
               )}{" "}
             </div>
-            {CartItems.length > 0 ? (
+            {CartItems?.length > 0 ? (
               <>
                 <div
                   className="d-flex flex-row px-lg-5 mx-lg-5 "
@@ -43,7 +43,7 @@ const Cart = () => {
                     TOTAL
                   </div>
                 </div>
-                {CartItems.map((item, index) => (
+                {CartItems?.map((item, index) => (
                   <div
                     key={index}
                     className="
@@ -59,7 +59,7 @@ const Cart = () => {
                     <div className="d-flex flex-row align-items-center">
                       <div>
                         <img
-                          src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                          src={item.image}
                           width="150"
                           height="150"
                           alt=""
@@ -67,7 +67,7 @@ const Cart = () => {
                         />
                       </div>
                       <div className="d-flex flex-column pl-md-3 pl-1">
-                        <div >
+                        <div>
                           <h6 className={styles.h6}>{item.title}</h6>
                         </div>
                       </div>
@@ -104,7 +104,7 @@ const Cart = () => {
                 <b className="pl-md-4">
                   SUBTOTAL
                   <span className="pl-md-4">
-                    {CartItems.length > 0 ? "$300" : "$0"}
+                    {CartItems?.length > 0 ? "$300" : "$0"}
                   </span>
                 </b>
               </div>

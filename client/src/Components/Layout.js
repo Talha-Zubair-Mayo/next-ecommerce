@@ -15,7 +15,7 @@ import useStyles from "../../utils/JssStyles";
 import NextLink from "next/link";
 const Layout = ({ children, title, description }) => {
   const classes = useStyles();
-  const CartItems = useSelector((state) => state.CartItems.cartItems.length);
+  const CartItems = useSelector((state) => state?.CartItems?.cartItems?.length);
   return (
     <div>
       <Head>
