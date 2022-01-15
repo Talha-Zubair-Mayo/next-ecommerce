@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 const Home = ({ ProductList }) => (
   <>
-    <Layout>
+    <Layout >
       <Grid container spacing={3}>
         {ProductList.map((product, index) => (
           <Grid key={index} item md={4}>

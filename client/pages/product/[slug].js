@@ -56,6 +56,7 @@ const ProductScreen = ({ productDetails }) => {
                     <p id={styles.tag_section}>
                       <strong>Rating : </strong>
                       <Rating
+                        readOnly
                         name="size-large"
                         defaultValue={productDetails.rating}
                         precision={0.5}

@@ -35,7 +35,7 @@ const Layout = ({ children, title, description }) => {
             <NextLink href="/cart">
               <Badge
                 color="secondary"
-                overlap="circle"
+                overlap="circular"
                 badgeContent={CartItems}>
                 <Link>
                   <IconButton>

@@ -1,52 +1,66 @@
 import React from "react";
-import styles from "./Cart.module.css";
+import styles from "./Cart.module.scss";
 import Layout from "../../src/Components/Layout";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { Cart_Remove_Item } from "../../src/Redux/Constants/CartConstants";
 const Cart = () => {
   const CartItems = useSelector((state) => state?.CartItems?.cartItems);
-
+  const dispatch = useDispatch();
+  const removeFromCartHandler = (id) => {
+    dispatch({
+      type: Cart_Remove_Item,
+      payload: id,
+    });
+  };
   return (
     <Layout title="CartItems" description="CartItems">
-      <div className="container bg-white rounded-top mt-5" id={styles.zero_pad}>
-        <div className="row d-flex justify-content-center">
-          <div className="col-lg-10 col-12 pt-3">
-            <div className="d-flex flex-column pt-4">
-              <div>
-                <h5
-                  id={styles.h5}
-                  className="text-uppercase font-weight-normal">
-                  shopping Cart
-                </h5>
-              </div>
-              {CartItems?.length > 0 && (
-                <div className="font-weight-normal">
-                  {CartItems?.length} items
-                </div>
-              )}{" "}
-            </div>
-            {CartItems?.length > 0 ? (
-              <>
-                <div
-                  className="d-flex flex-row px-lg-5 mx-lg-5 "
-                  id={styles.heading}>
-                  <div className="px-lg-5 mr-lg-5" id={styles.produc}>
-                    PRODUCTS
+      <>
+        <div className="row mt-5">
+          <div className="col-md-8">
+            <div
+              className="container bg-white rounded-top"
+              id={styles.zero_pad}>
+              <div className="row d-flex justify-content-center">
+                <div className="col-lg-10 col-12 pt-3">
+                  <div className="d-flex flex-column pt-4">
+                    <div>
+                      <h5
+                        id={styles.h5}
+                        className="text-uppercase font-weight-normal">
+                        shopping Cart
+                      </h5>
+                    </div>
+                    {CartItems?.length > 0 && (
+                      <div className="font-weight-normal">
+                        {CartItems?.length} items
+                      </div>
+                    )}{" "}
                   </div>
-                  <div className="px-lg-5 ml-lg-5" id={styles.prc}>
-                    PRICE
-                  </div>
-                  <div className="px-lg-5 ml-lg-1" id={styles.quantity}>
+                  {CartItems?.length > 0 ? (
+                    <>
+                      <div
+                        className="d-flex flex-row  mx-lg-5 "
+                        id={styles.heading}>
+                        <div className="px-lg-5 mr-lg-5" id={styles.produc}>
+                          IMAGE
+                        </div>
+                        <div className="px-lg-5 mr-lg-5" id={styles.produc}>
+                          TITLE
+                        </div>
+                        <div className="px-lg-5 ml-lg-5" id={styles.prc}>
+                          PRICE
+                        </div>
+                        {/* <div className="px-lg-5 ml-lg-1" id={styles.quantity}>
                     QUANTITY
-                  </div>
-                  <div className="px-lg-5 ml-lg-3" id={styles.total}>
+                  </div> */}
+                        {/* <div className="px-lg-5 ml-lg-3" id={styles.total}>
                     TOTAL
-                  </div>
-                </div>
-                {CartItems?.map((item, index) => (
-                  <div
-                    key={index}
-                    className="
+                  </div> */}
+                      </div>
+                      {CartItems?.map((item, index) => (
+                        <div
+                          key={index}
+                          className="
               d-flex
               flex-row
               justify-content-between
@@ -56,67 +70,77 @@ const Cart = () => {
               border-bottom
               mobile
             ">
-                    <div className="d-flex flex-row align-items-center">
-                      <div>
-                        <img
-                          src={item.image}
-                          width="150"
-                          height="150"
-                          alt=""
-                          id={styles.image}
-                        />
-                      </div>
-                      <div className="d-flex flex-column pl-md-3 pl-1">
-                        <div>
-                          <h6 className={styles.h6}>{item.title}</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="pl-md-0 pl-1">
-                      <b>$9.99</b>
-                    </div>
-                    <div className="pl-md-0 pl-2">
+                          <div className="d-flex flex-row align-items-center">
+                            <div>
+                              <img
+                                src={item.image}
+                                width="150"
+                                height="150"
+                                alt=""
+                                id={styles.image}
+                              />
+                            </div>
+                            <div className="d-flex flex-column pl-md-3 pl-1">
+                              <div>
+                                <h6 className={styles.h6}>{item.title}</h6>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="pl-md-0 pl-1">
+                            <b>${item.price}</b>
+                          </div>
+                          {/* <div className="pl-md-0 pl-2">
                       <span className="fa fa-minus-square text-secondary"></span>
                       <span className="px-md-3 px-1">2</span>
                       <span className="fa fa-plus-square text-secondary"></span>
-                    </div>
-                    <div className="pl-md-0 pl-1">
+                    </div> */}
+                          {/* <div className="pl-md-0 pl-1">
                       <b>$19.98</b>
-                    </div>
-                    <div className="close">&times;</div>
-                  </div>
-                ))}
-              </>
-            ) : (
-              <h3 className="text-center">NO Product Found</h3>
-            )}
-          </div>
-        </div>
-      </div>
-      <div
-        className="container bg-light rounded-bottom py-4"
-        id={styles.zero_pad}>
-        <div className="row d-flex justify-content-center">
-          <div className="col-lg-10 col-12">
-            <div className="d-flex justify-content-between align-items-center">
-              <div></div>
-              <div className="px-md-0 px-1" id="footer-font">
-                <b className="pl-md-4">
-                  SUBTOTAL
-                  <span className="pl-md-4">
-                    {CartItems?.length > 0 ? "$300" : "$0"}
-                  </span>
-                </b>
+                    </div> */}
+                          <div
+                            onClick={() => removeFromCartHandler(item._id)}
+                            id={styles.closee}
+                            className="close">
+                            &times;
+                          </div>
+                        </div>
+                      ))}
+                    </>
+                  ) : (
+                    <h3 className="text-center">NO Product Found</h3>
+                  )}
+                </div>
               </div>
-              <div>
-                <button className="btn btn-sm bg-dark text-white px-lg-5 px-3">
-                  CONTINUE
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="container bg-white rounded-top mt-2">
+              <div className={styles.Yorder}>
+                <table className={styles.table}>
+                  <tr>
+                    <th className={styles.th} colSpan={2}>
+                      Your order
+                    </th>
+                  </tr>
+                  <tr className={styles.tr}>
+                    <td className={styles.td}>Product Name x 2(Qty)</td>
+                    <td className={styles.td}>$88.00</td>
+                  </tr>
+                  <tr>
+                    <td className={styles.td}>Subtotal</td>
+                    <td className={styles.td}>$88.00</td>
+                  </tr>
+                </table>
+                <br />
+
+                <button className={styles.button} type="button">
+                  Place Order
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     </Layout>
   );
 };

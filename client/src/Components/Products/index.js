@@ -33,6 +33,7 @@ const Product = ({ productDetails }) => {
         <p>{productDetails.description}</p>
         <div className="stars">
           <Rating
+            readOnly
             name="size-large"
             defaultValue={productDetails.rating}
             precision={0.5}
