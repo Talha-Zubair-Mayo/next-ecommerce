@@ -12,6 +12,7 @@ const Cart = () => {
       payload: id,
     });
   };
+  var total = CartItems.reduce((accum, item) => accum + item.price, 0);
   return (
     <Layout title="CartItems" description="CartItems">
       <>
@@ -107,7 +108,7 @@ const Cart = () => {
                       ))}
                     </>
                   ) : (
-                    <h3 className="text-center">NO Product Found</h3>
+                    <h3 className="text-center">No Product Found</h3>
                   )}
                 </div>
               </div>
@@ -122,20 +123,17 @@ const Cart = () => {
                       Your order
                     </th>
                   </tr>
-                  <tr className={styles.tr}>
-                    <td className={styles.td}>Product Name x 2(Qty)</td>
-                    <td className={styles.td}>$88.00</td>
-                  </tr>
+
                   <tr>
                     <td className={styles.td}>Subtotal</td>
-                    <td className={styles.td}>$88.00</td>
+                    <td className={styles.td}>${total}</td>
                   </tr>
                 </table>
                 <br />
 
-                <button className={styles.button} type="button">
-                  Place Order
-                </button>
+                <a className={styles.button} type="button">
+                  Proceed To Checkout
+                </a>
               </div>
             </div>
           </div>

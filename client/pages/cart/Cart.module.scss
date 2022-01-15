@@ -59,6 +59,7 @@
 .td {
   border-bottom: 1px solid #dadada;
   padding: 25px 25px 25px 0;
+  width: 100%;
 }
 
 .p {
@@ -78,11 +79,13 @@
   border: none;
   border-radius: 30px;
   background: #52ad9c;
-  color: #fff;
+  color: #fff !important;
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
   outline: none;
+  text-align: center;
+
 }
 .button:hover {
   cursor: pointer;
@@ -149,3 +152,4 @@
     padding-top: 15px;
   }
 }
+

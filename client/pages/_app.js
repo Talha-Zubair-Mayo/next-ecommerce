@@ -1,7 +1,9 @@
 import { useEffect } from "react";
-import store from "../src/Redux/Store";
+import createStore from "../src/Redux/Store";
 import "../styles/globals.css";
 import { Provider } from "react-redux";
+const { store } = createStore();
+
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const jssStyles = document.querySelector("#jss-server-side");

@@ -5,7 +5,7 @@ const useStyles = makeStyles({
     backgroundColor: "#3498db",
     "& a": { color: "#ffff", textDecoration: "none", marginLeft: "10px" },
   },
-  main: { padding: "0px" },
+  main: { padding: "20px" },
   footer: {
     textAlign: "center",
   },
