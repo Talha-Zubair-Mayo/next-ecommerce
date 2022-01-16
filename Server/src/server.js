@@ -11,9 +11,13 @@ const port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors());
 app.use(cookieparser());
+// Product Routes
 const product = require("./routes/ProductRoute");
 const user = require("./routes/UserRoute");
+// Auth Routes
+const authh = require("./routes/AuthRoutes");
 app.use("/api/", product);
+app.use("/api/", authh);
 
 app.listen(process.env.PORT || port, () => {
   console.log(

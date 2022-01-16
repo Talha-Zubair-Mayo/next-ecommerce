@@ -1,29 +1,77 @@
 const mongoose = require("mongoose");
 
-const userSchema =  mongoose.Schema(
+const UserSchema = new mongoose.Schema(
   {
-    name: {
+    fullname: {
       type: String,
-      required: true,
+      require: true,
+      trim: true,
+      maxlength: 50,
     },
+    // username: {
+    //   type: String,
+    //   require: true,
+    //   trim: true,
+    //   maxlength: 50,
+    //   unique: true,
+    //   lowercase: true,
+    // },
     email: {
       type: String,
-      required: true,
+      unique: true,
+      require: true,
+      trim: true,
       lowercase: true,
+      maxlength: 50,
     },
     password: {
       type: String,
-      required: true,
+      require: true,
+    },
+    avatar: {
+      type: Object,
+      default: {
+        url: "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png",
+      },
     },
     isAdmin: {
       type: Boolean,
       required: true,
       default: false,
     },
+    isEmailVerified: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isGoogleLogged: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isFacebookLogged: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    // gender: { type: String, default: "male" },
+    mobile: { type: String, default: "" },
+    // adress: { type: String, default: "" },
+
+    // story: {
+    //   type: String,
+    //   require: true,
+    //   trim: true,
+    //   maxlength: 200,
+    // },
+    // website: { type: String, default: "" },
+
+    // following: [{ type: mongoose.Types.ObjectId, ref: "user" }],
+    // followers: [{ type: mongoose.Types.ObjectId, ref: "user" }],
   },
   {
     timestamps: true,
   }
 );
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+
+module.exports = mongoose.model("User", UserSchema);
