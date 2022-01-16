@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Cart.module.scss";
 import Layout from "../../src/Components/Layout";
 import { useSelector, useDispatch } from "react-redux";
-import { Cart_Remove_Item } from "../../src/Redux/Constants/CartConstants";
+import { Cart_Remove_Item } from "../../src/Redux/Constants";
 const Cart = () => {
   const CartItems = useSelector((state) => state?.CartItems?.cartItems);
   const dispatch = useDispatch();

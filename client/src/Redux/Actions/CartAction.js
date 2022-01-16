@@ -3,7 +3,7 @@ import {
   Cart_Remove_Item,
   Cart_Shipping_Address,
   CART_SAVE_PAYMENT_METHOD,
-} from "../Constants/CartConstants";
+} from "../Constants";
 export const addToCart = (product, qty) => async (dispatch) => {
   // const { data } = await axios.get(`http://localhost:8080/api/products/${id}`);
   dispatch({

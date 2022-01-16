@@ -3,12 +3,18 @@ import styles from "./Header.module.scss";
 import NextLink from "next/link";
 import { Badge } from "@material-ui/core";
 import { useSelector } from "react-redux";
+
 const Header = () => {
   const [Total, setTotal] = useState("");
   const CartItems = useSelector((state) => state?.CartItems.cartItems);
+  const Token = useSelector((state) => state?.UserLogin?.data);
   useEffect(() => {
     setTotal(CartItems.length);
   }, [CartItems]);
+  const handleLogout = () => {
+    localStorage.removeItem("persist:UserLogin");
+    window.location.href = "/";
+  };
   return (
     <div id={styles.Main}>
       <div className={styles.Brand}>
@@ -31,11 +37,22 @@ const Header = () => {
                 </a>
               </NextLink>
             </li>
-            <li className={styles.NavItem}>
-              <NextLink href="/login">
-                <a href="">Login</a>
-              </NextLink>
-            </li>
+            {Token.token ? (
+              <li className={styles.NavItem}>
+                <NextLink href="">
+                  <a onClick={handleLogout} href="">
+                    Logout
+                  </a>
+                </NextLink>
+              </li>
+            ) : (
+              <li className={styles.NavItem}>
+                <NextLink href="/login">
+                  <a href="">Login</a>
+                </NextLink>
+              </li>
+            )}
+
             {/* <li className={styles.NavItem}>
               <NextLink href="">
                 <a href="">Checkout</a>

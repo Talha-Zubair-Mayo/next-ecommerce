@@ -109,11 +109,16 @@ const AuthCntrl = {
         maxAge: 30 * 24 * 60 * 60 * 1000,
       });
       res.status(200).json({
-        msg: "Login Success!",
-        AccessToken,
-        user: {
-          ...user._doc,
-          password: "",
+        msg: "Login Successfully!",
+        data: {
+          token: AccessToken,
+          user: {
+            email: user.email,
+            fullname: user.fullname,
+            phone: user.phone,
+            _id: user._id,
+            avatar: user.avatar,
+          },
         },
       });
     } catch (error) {

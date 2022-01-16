@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import styles from "./Login.module.scss";
 import NextLink from "next/link";
 import { validateFields } from "../../../utils/Validtions";
+import { UserSignInApi } from "../../Redux/api";
+import { useDispatch } from "react-redux";
+import { USER_SIGN_IN_SUCCESS } from "../../Redux/Constants";
+import { toast } from "react-toastify";
 const Login = () => {
+  const dispatch = useDispatch();
   const [FormData, setFormData] = useState({
     Email: "",
     Password: "",
   });
+  const [IsLoading, setIsLoading] = useState(false);
   const [EmailError, setEmailError] = useState("");
   const [PasswordError, setPasswordError] = useState("");
   const InputHandler = (e) => {
@@ -37,10 +43,27 @@ const Login = () => {
   };
   const SubmitHandler = (e) => {
     e.preventDefault();
+    const PayLoad = {
+      email: FormData.Email,
+      password: FormData.Password,
+    };
     const EmailError = validateFields.validateEmail(FormData.Email);
     const PasswordError = validateFields.validatePassword(FormData.Password);
     if ([EmailError, PasswordError].every((e) => e === false)) {
-      alert("Login Successfully");
+      UserSignInApi(PayLoad)
+        .then((res) => {
+          toast.success(res.data.msg);
+          dispatch({
+            type: USER_SIGN_IN_SUCCESS,
+            payload: res.data.data,
+          });
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 2000);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.msg);
+        });
     } else {
       setEmailError(EmailError);
       setPasswordError(PasswordError);
@@ -86,9 +109,9 @@ const Login = () => {
             <div className="py-3">
               <span className="py-2"> Password </span>
 
-              <a href="#" className={styles.Links}>
-                Forgot?
-              </a>
+              <NextLink href="/forgot-password">
+                <a className={styles.Links}>Forgot?</a>
+              </NextLink>
               <div className={styles.wrap_input}>
                 <input
                   className={styles.input}

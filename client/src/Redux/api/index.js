@@ -14,3 +14,9 @@ export const EmailActivationApi = async (activation_token) => {
   });
   return res;
 };
+
+// User Sign In API
+export const UserSignInApi = async (Data) => {
+  const res = await axios.post(API_URL + "/login", Data);
+  return res;
+};
