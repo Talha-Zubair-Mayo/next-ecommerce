@@ -172,9 +172,8 @@ const AuthCntrl = {
         return res.status(400).json({ msg: "This email does not exist." });
 
       const activationToken = ActivationToken({ _id: user._id });
-      const url = `${CLIENT_URL}/api/resetpass/${activationToken}`;
-      const html = FotgotPassword(url);
-
+      const url = `${CLIENT_URL}/reset-password/${activationToken}`;
+      const html = FotgotPassword(url, user.fullname);
       SendMail(email, html, "Forget Password ?");
       res
         .status(200)
@@ -222,9 +221,6 @@ const AuthCntrl = {
       const { name, email, picture, email_verified } = verify.payload;
       const password = email + process.env.Google_Password_Key;
       const passwordHash = await bcrypt.hash(password, 12);
-
-      const str = email;
-      const ressss = str.split("@")[0];
 
       if (!email_verified)
         return res.status(400).json({ msg: "Email verification failed." });

@@ -1,6 +1,6 @@
 const date = new Date();
 const Year = date.getFullYear();
-const FotgotPassword = (url) => {
+const FotgotPassword = (url, name) => {
   return `
    	<head>
     <meta charset="UTF-8" />
@@ -261,7 +261,7 @@ const FotgotPassword = (url) => {
                                       display: block;
                                       overflow: hidden;
                                     "
-                                    >GO TO WOHOO</a
+                                    >GO TO E-APP</a
                                   >
                                 </td>
                               </tr>
@@ -337,7 +337,7 @@ const FotgotPassword = (url) => {
                         text-transform: uppercase;
                       "
                     >
-                      Hi MATT
+                      Hi ${name}
                     </td>
                   </tr>
                   <tr>

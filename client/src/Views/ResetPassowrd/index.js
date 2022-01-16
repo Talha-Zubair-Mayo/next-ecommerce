@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./ResetPassowrd.module.scss";
 import NextLink from "next/link";
 import { validateFields } from "../../../utils/Validtions";
-const ResetPassowrd = () => {
+import { ResetPasswordApi } from "../../Redux/api";
+import { toast } from "react-toastify";
+const ResetPassowrd = ({ activationCode }) => {
   const [FormData, setFormData] = useState({
     Password: "",
     CPassword: "",
@@ -41,6 +43,10 @@ const ResetPassowrd = () => {
   };
   const SubmitHandler = (e) => {
     e.preventDefault();
+    const Payload = {
+      password: FormData.Password,
+      cf_password: FormData.CPassword,
+    };
     const PasswordError = validateFields.RegistervalidatePassword(
       FormData.Password
     );
@@ -49,7 +55,11 @@ const ResetPassowrd = () => {
       FormData.CPassword
     );
     if ([PasswordError, CPasswordError].every((e) => e === false)) {
-      alert(JSON.stringify(FormData));
+      ResetPasswordApi(Payload, activationCode)
+        .then((res) => {
+          toast.success("Password Reset Successfully");
+        })
+        .catch((err) => {});
     }
     {
       setPasswordError(PasswordError);

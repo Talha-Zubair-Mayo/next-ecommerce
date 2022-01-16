@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import styles from "./ForgotPassword.module.scss";
 import NextLink from "next/link";
 import { validateFields } from "../../../utils/Validtions";
+import { ForgotPasswordApi } from "../../Redux/api";
+import { toast } from "react-toastify";
 const ForgotPassword = () => {
   const [FormData, setFormData] = useState({
     Email: "",
@@ -29,9 +31,18 @@ const ForgotPassword = () => {
   };
   const SubmitHandler = (e) => {
     e.preventDefault();
+    const PayLoad = {
+      email: FormData.Email,
+    };
     const EmailError = validateFields.validateEmail(FormData.Email);
     if ([EmailError].every((e) => e === false)) {
-      alert(JSON.stringify(FormData));
+      ForgotPasswordApi(PayLoad)
+        .then((res) => {
+          toast.success(res.data.msg);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.msg);
+        });
     }
     {
       setEmailError(EmailError);

@@ -57,6 +57,7 @@ const Login = () => {
             type: USER_SIGN_IN_SUCCESS,
             payload: res.data.data,
           });
+          localStorage.setItem("token", res.data.data.token);
           setTimeout(() => {
             window.location.href = "/";
           }, 2000);

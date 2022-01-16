@@ -1,6 +1,16 @@
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 import axios from "axios";
 
+let token;
+if (typeof window !== "undefined") {
+  token = localStorage.getItem("token");
+}
+
+const config = {};
+if (token) {
+  config.headers = { Authorization: token };
+}
+
 // User SignUp API
 export const UserSignUpApi = async (Data) => {
   const res = await axios.post(API_URL + "/register", Data);
@@ -18,5 +28,19 @@ export const EmailActivationApi = async (activation_token) => {
 // User Sign In API
 export const UserSignInApi = async (Data) => {
   const res = await axios.post(API_URL + "/login", Data);
+  return res;
+};
+
+// Forgot Password API
+export const ForgotPasswordApi = async (Data) => {
+  const res = await axios.post(API_URL + "/forgotPassword", Data);
+  return res;
+};
+
+// Reset Passowrd Api
+
+export const ResetPasswordApi = async (Data, activationCode) => {
+  config.headers = { Authorization: activationCode };
+  const res = await axios.patch(API_URL + "/resetpassword", Data, config);
   return res;
 };
