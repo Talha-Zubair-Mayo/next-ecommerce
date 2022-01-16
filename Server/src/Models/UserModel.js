@@ -55,7 +55,7 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
     // gender: { type: String, default: "male" },
-    mobile: { type: String, default: "" },
+    phone: { type: String, default: "" },
     // adress: { type: String, default: "" },
 
     // story: {

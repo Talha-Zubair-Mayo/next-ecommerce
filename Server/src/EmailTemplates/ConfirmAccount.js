@@ -1,3 +1,5 @@
+const date = new Date();
+const Year = date.getFullYear();
 const ConfirmAccount = (url) => {
   return `
    <head>
@@ -619,7 +621,7 @@ const ConfirmAccount = (url) => {
                                     color: #ffffff;
                                   "
                                 >
-                                  &copy; 2014, All rights reserved
+                                  &copy; ${Year}, All rights reserved
                                 </td>
                               </tr>
                               <tr>

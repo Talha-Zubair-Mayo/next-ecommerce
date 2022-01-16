@@ -13,8 +13,8 @@ const client = new OAuth2(process.env.Mail_Service_Client_ID);
 const AuthCntrl = {
   register: async (req, res) => {
     try {
-      const { fullname, username, email, password, gender } = req.body;
-      if (!fullname || !username || !email || !password || !gender) {
+      const { fullname, email, password, phone } = req.body;
+      if (!fullname || !email || !password || !phone) {
         return res.status(404).json({
           msg: "Please Fill All Fields",
         });
@@ -37,13 +37,13 @@ const AuthCntrl = {
         fullname,
         email,
         password: passwordHash,
-        gender,
+        phone,
       });
       const UserActivation = { _id: newUser._id, isEmailVerified: true };
 
       const Activation_Token = ActivationToken(UserActivation);
 
-      const url = `${CLIENT_URL}/api/activateEmail/${Activation_Token}`;
+      const url = `${CLIENT_URL}/activateEmail/${Activation_Token}`;
       const html = await ConfirmAccount(url);
       await SendMail(email, html, "Confirm Your Account");
       await newUser.save();
@@ -58,7 +58,6 @@ const AuthCntrl = {
   activateEmail: async (req, res) => {
     try {
       const { activation_token } = req.body;
-
       const user = jwt.verify(activation_token, process.env.AccessTokenKey);
       const { _id, isEmailVerified } = user;
       const newData = { isEmailVerified: isEmailVerified };
@@ -142,12 +141,8 @@ const AuthCntrl = {
       jwt.verify(rf_token, process.env.ReFreshTokenKey, async (err, user) => {
         if (err) return res.status(400).json({ msg: "Please login now." });
         const userr = await User.findById(user._id)
-          .select(
-            "avatar fullname  email gender mobile"
-          )
-          .populate(
-            "avatar  fullname  "
-          );
+          .select("avatar fullname  email gender mobile")
+          .populate("avatar  fullname  ");
 
         if (!userr)
           return res.status(400).json({ msg: "This does not exist." });

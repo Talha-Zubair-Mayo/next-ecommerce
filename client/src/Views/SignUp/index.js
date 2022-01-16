@@ -3,8 +3,11 @@ import styles from "./SignUp.module.scss";
 import NextLink from "next/link";
 import { validateFields } from "../../../utils/Validtions";
 import PhoneInput from "react-phone-input-2";
-
+import { UserSignUpApi } from "../../Redux/api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 const SignUp = () => {
+  const router = useRouter();
   const [FormData, setFormData] = useState({
     FullName: "",
     Email: "",
@@ -17,6 +20,7 @@ const SignUp = () => {
   const [PasswordError, setPasswordError] = useState("");
   const [CPasswordError, setCPasswordError] = useState("");
   const [PhoneError, setPhoneError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const InputHandler = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => {
@@ -61,6 +65,12 @@ const SignUp = () => {
   };
   const SubmitHandler = (e) => {
     e.preventDefault();
+    const Payload = {
+      fullname: FormData.FullName,
+      email: FormData.Email,
+      password: FormData.Password,
+      phone: FormData.Phone,
+    };
     const FullNameError = validateFields.validateFullName(FormData.FullName);
     const EmailError = validateFields.validateEmail(FormData.Email);
     const PasswordError = validateFields.RegistervalidatePassword(
@@ -80,7 +90,19 @@ const SignUp = () => {
         PhoneError,
       ].every((e) => e === false)
     ) {
-      alert(JSON.stringify(FormData));
+      setIsLoading(true);
+      UserSignUpApi(Payload)
+        .then((res) => {
+          toast.success(res.data.msg);
+          setTimeout(() => {
+            router.push("/login");
+          }, 2000);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.msg);
+          setIsLoading(false);
+        });
     }
     {
       setFullNameError(FullNameError);
@@ -201,11 +223,19 @@ const SignUp = () => {
                 <span className={styles.alert_validate}>{PhoneError}</span>
               )}
             </div>
-            <div className={`${styles.container_SignUp_form_btn} py-2`}>
-              <button type="submit" className={styles.SignUp_form_btn}>
-                Sign Up
-              </button>
-            </div>
+            {isLoading ? (
+              <div className={`${styles.container_SignUp_form_btn} py-2`}>
+                <button disabled className={styles.SignUp_form_btn}>
+                  Sign Up
+                </button>
+              </div>
+            ) : (
+              <div className={`${styles.container_SignUp_form_btn} py-2`}>
+                <button type="submit" className={styles.SignUp_form_btn}>
+                  Sign Up
+                </button>
+              </div>
+            )}
 
             <div className="w-full text-center py-3">
               <span className="txt2"> Already Registered? </span>
