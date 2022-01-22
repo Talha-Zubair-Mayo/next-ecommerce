@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import styles from "./Login.module.scss";
+import GoogleLogin from "react-google-login";
 import NextLink from "next/link";
 import { validateFields } from "../../../utils/Validtions";
-import { UserSignInApi } from "../../Redux/api";
+import { UserSignInApi, LoginWithGoogleApi } from "../../Redux/api";
 import { useDispatch } from "react-redux";
 import { USER_SIGN_IN_SUCCESS } from "../../Redux/Constants";
 import { toast } from "react-toastify";
-const Login = () => {
+import FacebookLogin from "react-facebook-login";
+function Login() {
   const dispatch = useDispatch();
   const [FormData, setFormData] = useState({
     Email: "",
@@ -70,6 +72,25 @@ const Login = () => {
       setPasswordError(PasswordError);
     }
   };
+  const responseGoogle = (response) => {
+    // await dispatch(GoogleLoginAction(response.tokenId));
+    LoginWithGoogleApi(response.tokenId).then((res) => {
+      toast.success(res.data.msg);
+      dispatch({
+        type: USER_SIGN_IN_SUCCESS,
+        payload: res.data.data,
+      });
+      localStorage.setItem("token", res.data.data.token);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
+    });
+    // .catch((err) => {
+    //   // toast.error(err?.response?.data?.msg);
+    //   console.log(err.response);
+    // });
+  };
+
   return (
     <div>
       <div className={styles.container_login100}>
@@ -82,11 +103,15 @@ const Login = () => {
                 <i className="bx bxl-facebook"></i>
                 Facebook
               </button>
-
-              <button className={styles.btn_google}>
-                <i className="bx bxl-google"></i>
-                Google
-              </button>
+             
+              <GoogleLogin
+                clientId={process.env.NEXT_PUBLIC_Client_ID}
+                buttonText="Login With Google"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+                className={styles.btn_google}
+              />
             </div>
 
             <div className="py-3">
@@ -147,6 +172,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;

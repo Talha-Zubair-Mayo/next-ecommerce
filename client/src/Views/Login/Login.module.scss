@@ -50,6 +50,9 @@
 [ Button sign in with ]*/
 .btn_face,
 .btn_google {
+  border-radius: 10px !important;
+  padding: 0px !important;
+  margin: 0;
   border: none;
   outline: none !important;
   font-family: Montserrat-SemiBold;

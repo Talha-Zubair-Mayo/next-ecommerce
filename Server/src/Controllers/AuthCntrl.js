@@ -237,12 +237,25 @@ const AuthCntrl = {
         if (!isMatch)
           return res.status(400).json({ msg: "Password is incorrect." });
         const RefreshToken = CreateRefreshToken({ _id: user._id });
+        const AccessToken = CreateAccessToken({ _id: user._id });
 
         res.cookie("SocialToken", RefreshToken, {
           httpOnly: true,
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
-        res.json({ msg: "Login success!" });
+        res.status(200).json({
+          msg: "Login Successfully!",
+          data: {
+            token: AccessToken,
+            user: {
+              email: user.email,
+              fullname: user.fullname,
+              phone: user.phone,
+              _id: user._id,
+              avatar: user.avatar,
+            },
+          },
+        });
       } else {
         const newUserr = new User({
           fullname: name,
@@ -253,13 +266,27 @@ const AuthCntrl = {
           avatar: { url: picture },
         });
         await newUserr.save();
+        const AccessToken = CreateAccessToken({ _id: newUserr._id });
+
         const RefreshToken = CreateRefreshToken({ _id: newUserr._id });
 
         res.cookie("SocialToken", RefreshToken, {
           httpOnly: true,
           maxAge: 30 * 24 * 60 * 60 * 1000,
         });
-        res.json({ msg: "Login success!" });
+        res.status(200).json({
+          msg: "Login Successfully!",
+          data: {
+            token: AccessToken,
+            user: {
+              email: newUserr.email,
+              fullname: newUserr.fullname,
+              phone: newUserr.phone,
+              _id: newUserr._id,
+              avatar: newUserr.avatar,
+            },
+          },
+        });
       }
     } catch (error) {
       res.status(500).json({ msg: error.message });

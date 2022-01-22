@@ -44,3 +44,11 @@ export const ResetPasswordApi = async (Data, activationCode) => {
   const res = await axios.patch(API_URL + "/resetpassword", Data, config);
   return res;
 };
+
+// Login With Google
+export const LoginWithGoogleApi = async (Data) => {
+  const res = await axios.post(API_URL + "/googleLogin", {
+    tokenId: Data,
+  });
+  return res;
+};
