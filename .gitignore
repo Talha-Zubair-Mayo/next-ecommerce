@@ -3,5 +3,6 @@
 /.pnp
 .pnp.js
 /.env
-Server/.env
+.env
+.env
 client/.env

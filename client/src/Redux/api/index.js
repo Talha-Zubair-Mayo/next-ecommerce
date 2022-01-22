@@ -52,3 +52,10 @@ export const LoginWithGoogleApi = async (Data) => {
   });
   return res;
 };
+
+// Login  With Facebook
+
+export const LoginWithFacebookApi = async (Data) => {
+  const res = await axios.post(API_URL + "/facebookLogin", Data);
+  return res;
+};

@@ -3,7 +3,11 @@ import styles from "./Login.module.scss";
 import GoogleLogin from "react-google-login";
 import NextLink from "next/link";
 import { validateFields } from "../../../utils/Validtions";
-import { UserSignInApi, LoginWithGoogleApi } from "../../Redux/api";
+import {
+  UserSignInApi,
+  LoginWithGoogleApi,
+  LoginWithFacebookApi,
+} from "../../Redux/api";
 import { useDispatch } from "react-redux";
 import { USER_SIGN_IN_SUCCESS } from "../../Redux/Constants";
 import { toast } from "react-toastify";
@@ -91,6 +95,16 @@ function Login() {
     // });
   };
 
+  const responseFacebook = async (response) => {
+    const { accessToken, userID } = response;
+    const Data = {
+      accessToken,
+      userID,
+    };
+    LoginWithFacebookApi(Data)
+      .then((res) => {})
+      .catch((err) => {});
+  };
   return (
     <div>
       <div className={styles.container_login100}>
@@ -103,7 +117,15 @@ function Login() {
                 <i className="bx bxl-facebook"></i>
                 Facebook
               </button>
-             
+              {/* <FacebookLogin
+                appId={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}
+                autoLoad={true}
+                fields="name,email,picture"
+                callback={responseFacebook}
+                cssClass="my-facebook-button-class"
+                icon="fa-facebook"
+              /> */}
+
               <GoogleLogin
                 clientId={process.env.NEXT_PUBLIC_Client_ID}
                 buttonText="Login With Google"
