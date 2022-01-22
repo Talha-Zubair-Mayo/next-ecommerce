@@ -5,12 +5,20 @@ import Layout from "../../src/components/Layout";
 import styles from "./ProductDetails.module.css";
 import Rating from "@mui/material/Rating";
 import NextLink from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../src/Redux/Actions/CartAction";
 const ProductScreen = ({ productDetails }) => {
+  const CartItems = useSelector((state) => state?.CartItems?.cartItems);
+
   const dispatch = useDispatch();
   const AddToCartHandler = async () => {
-    await dispatch(addToCart(productDetails, 1));
+    const existItem = CartItems.find((x) => x._id === productDetails._id);
+    if (existItem) {
+      const qty = existItem.qty + 1;
+      await dispatch(addToCart(productDetails, qty));
+    } else {
+      await dispatch(addToCart(productDetails, 1));
+    }
   };
   return (
     <Layout

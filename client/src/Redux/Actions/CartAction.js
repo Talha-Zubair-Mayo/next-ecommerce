@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import {
   Cart_Add_Item,
   Cart_Remove_Item,
@@ -5,7 +6,10 @@ import {
   CART_SAVE_PAYMENT_METHOD,
 } from "../Constants";
 export const addToCart = (product, qty) => async (dispatch) => {
-  // const { data } = await axios.get(`http://localhost:8080/api/products/${id}`);
+  if (product.InStock < qty) {
+    toast.error("Maximum quantity Reached");
+    return;
+  }
   dispatch({
     type: Cart_Add_Item,
     payload: {
